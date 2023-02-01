@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from django.views import generic
 
@@ -27,6 +28,12 @@ class LiteraryFormatListView(generic.ListView):
 
 class BookListView(generic.ListView):
     model = Book
+    queryset = Book.objects.all().select_related("format")
+    paginate_by = 1
+
+
+class AuthorListView(generic.ListView):
+    model = Author
 
 
 # def literary_format_list_view(request):
@@ -37,3 +44,18 @@ class BookListView(generic.ListView):
 #     }
 #
 #     return render(request, "catalog/literary_format_list.html", context=context)
+
+class BookDetailView(generic.DetailView):
+    model = Book
+
+# def book_detail_view(request, pk):
+#     try:
+#         book = Book.objects.get(pk=pk)
+#     except Book.DoesNotExist:
+#         raise Http404("Book does not exist")
+#
+#     context = {
+#         "book": book
+#     }
+#
+#     return render(request, "catalog/book_detail.html", context=context)
