@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.views import generic
@@ -5,6 +7,7 @@ from django.views import generic
 from catalog.models import Book, Author, LiteraryFormat
 
 
+@login_required
 def index(request):
     num_books = Book.objects.count()
     num_authors = Author.objects.count()
@@ -23,7 +26,7 @@ def index(request):
     return render(request, "catalog/index.html", context=context)
 
 
-class LiteraryFormatListView(generic.ListView):
+class LiteraryFormatListView(LoginRequiredMixin, generic.ListView):
     model = LiteraryFormat
     template_name = "catalog/literary_format_list.html"
     context_object_name = "literary_format_list"
@@ -39,13 +42,13 @@ class LiteraryFormatListView(generic.ListView):
 #     return render(request, "catalog/literary_format_list.html", context=context)
 
 
-class BookListView(generic.ListView):
+class BookListView(LoginRequiredMixin, generic.ListView):
     model = Book
     queryset = Book.objects.all().select_related("format")
     paginate_by = 1
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Book
 
 # def book_detail_view(request, pk):
@@ -61,13 +64,14 @@ class BookDetailView(generic.DetailView):
 #     return render(request, "catalog/book_detail.html", context=context)
 
 
-class AuthorListView(generic.ListView):
+class AuthorListView(LoginRequiredMixin, generic.ListView):
     model = Author
 
 
-class AuthorDetailView(generic.DetailView):
+class AuthorDetailView(LoginRequiredMixin, generic.DetailView):
     model = Author
     queryset = Author.objects.all().prefetch_related("books__format")
+
 
 def test_session_view(request):
     return HttpResponse(

@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -6,7 +6,7 @@ from django.urls import reverse
 
 def login_view(request):
     if request.method == "GET":
-        return render(request, "accounts/login.html")
+        return render(request, "registration/login.html")
     elif request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -19,5 +19,10 @@ def login_view(request):
             error_context = {
                 "errors": "Invalid credentials!"
             }
-        return render(request, "accounts/login.html", context=error_context)
+        return render(request, "registration/login.html", context=error_context)
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, "registration/logged_out.html")
 
