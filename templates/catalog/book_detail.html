@@ -7,14 +7,14 @@
     <div class="ml-3">
       <h3>Authors</h3>
         {% for author in book.authors.all %}
-            <hr>
-            <p class="text-muted"><strong>Id:</strong> {{ author.id }}</p>
-            <p>
-              <strong>Full name:</strong> {{ author.first_name }} {{ author.last_name }}
-              {% if author.pseudonym %}({{ author.pseudonym }}){% endif %}
-            </p>
+          <hr>
+          <p class="text-muted"><strong>Id:</strong> {{ author.id }}</p>
+          <p>
+            <strong>Full name:</strong> {{ author.first_name }} {{ author.last_name }}
+            {% if author.pseudonym %}({{ author.pseudonym }}){% endif %}
+          </p>
         {% empty %}
-            <p>No authors!</p>
+          <p>No authors!</p>
         {% endfor %}
     </div>
 {% endblock %}

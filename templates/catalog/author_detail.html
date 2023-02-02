@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ author.first_name }} {{ author.last_name }}</h1>
+    <p><strong>Username:</strong> {{ author.username }}</p>
+    <p><strong>Is Staff:</strong> {{ author.is_staff}}</p>
+    <p>{% if author.pseudonym %} <strong>Pseudonym:</strong> {{ author.pseudonym }}{% endif %}</p>
+    <div class="ml-3">
+      <h3>Books</h3>
+        {% for book in author.books.all %}
+          <hr>
+          <p class="text-muted"><strong>Id:</strong> {{ book.id }}</p>
+          <p><strong>Title:</strong> {{ book.title }}</p>
+          <p><strong>Format:</strong> {{ book.format }}</p>
+        {% empty %}
+          <p>No books!</p>
+        {% endfor %}
+    </div>
+{% endblock %}

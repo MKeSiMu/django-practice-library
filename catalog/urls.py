@@ -1,6 +1,6 @@
 from django.urls import path
 
-from catalog.views import index, LiteraryFormatListView, BookListView, AuthorListView, BookDetailView
+from catalog.views import index, LiteraryFormatListView, BookListView, AuthorListView, BookDetailView, AuthorDetailView, test_session_view
 
 urlpatterns = [
     path("", index, name="index"),
@@ -23,6 +23,16 @@ urlpatterns = [
         "authors/",
         AuthorListView.as_view(),
         name="author-list"
+    ),
+    path(
+        "authors/<int:pk>/",
+        AuthorDetailView.as_view(),
+        name="author-detail"
+    ),
+    path(
+        "test-session/",
+        test_session_view,
+        name="test-session"
     )
 ]
 
