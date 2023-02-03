@@ -69,6 +69,7 @@ class AuthorDetailView(generic.DetailView):
     model = Author
     queryset = Author.objects.all().prefetch_related("books__format")
 
+
 def test_session_view(request):
     return HttpResponse(
         "<h1>Test Session</h1>"
